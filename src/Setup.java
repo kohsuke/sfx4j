@@ -16,6 +16,20 @@ import java.util.List;
  *     Kohsuke Kawaguchi (kk@kohsuke.org)
  */
 public class Setup implements Runnable {
+
+    /**
+     * Written as a preamble to the payload.
+     * This signature will be followed by the size of the payload
+     * (int), then the payload itself.
+     */
+    private static final byte[] signature = new byte[]{
+        (byte)0xde,(byte)0xad,(byte)0xbe,(byte)0xef,
+        (byte)0xde,(byte)0xad,(byte)0xbe,(byte)0xef,
+        (byte)0xde,(byte)0xad,(byte)0xbe,(byte)0xef,
+        (byte)0xde,(byte)0xad,(byte)0xbe,(byte)0xef
+    };
+    
+    
     public static void main( String[] args ) throws Exception {
         // read the beginning of the class file
         InputStream in = Setup.class.getResourceAsStream("Setup.class");
@@ -27,15 +41,9 @@ public class Setup implements Runnable {
             idx += len;
         }
         
-        byte[] signature = new byte[]{
-            (byte)0xde,(byte)0xad,(byte)0xbe,(byte)0xef,
-            (byte)0xde,(byte)0xad,(byte)0xbe,(byte)0xef,
-            (byte)0xde,(byte)0xad,(byte)0xbe,(byte)0xef,
-            (byte)0xde,(byte)0xad,(byte)0xbe,(byte)0xef
-        };
         
         
-        // then look for the marker.
+        // then look for the signature.
         int i;
         for( i=0; i<idx-signature.length-4; i++ ) {
             int j;
@@ -45,6 +53,10 @@ public class Setup implements Runnable {
                 
             if( j==16 )
                 break;
+        }
+        if( i==idx-signature.length-4 ) {
+            System.err.println("The package is broken");
+            System.exit(-1);
         }
         
         // read the length
@@ -61,6 +73,10 @@ public class Setup implements Runnable {
         DataInput din = new DataInputStream(Setup.class.getResourceAsStream("Setup.class"));
         din.skipBytes(start);
         din.readFully(payload);
+
+        // de-scramble
+        for( i=0; i<payload.length; i++ )
+            payload[i] ^= 0xAA;
         
         // write to a temporary jar file
         File jar = File.createTempFile("installer","jar");

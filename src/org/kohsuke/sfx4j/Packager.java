@@ -93,6 +93,11 @@ public class Packager {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
         byte[] buf = readStream(contents);
+        
+        // scramble
+        for( int i=0; i<buf.length; i++ )
+            buf[i] ^= 0xAA;
+        
         try {
             // write the signature
             for( int i=0; i<4; i++ )
