@@ -3,7 +3,7 @@
   <pomVersion>3</pomVersion>
   <name>sfx4j</name>
   <id>sfx4j</id>
-  <currentVersion>1.0-RC</currentVersion>
+  <currentVersion>1.0-RC2</currentVersion>
   
   <organization>
     <name>Kohsuke Kawaguchi</name>
