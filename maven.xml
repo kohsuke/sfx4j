@@ -1,0 +1,12 @@
+<project xmlns:j="jelly:core" xmlns:u="jelly:util">
+
+   <postGoal name="jar:jar">
+     <mkdir dir="target/rejar"/>
+     <unzip src="lib/bcel-5.1.jar" dest="target/rejar"/>
+     <copy todir="target/rejar" file="lib/bcel-LICENSE.txt" />
+     <jar destfile="target/${maven.final.name}.jar" update="yes">
+       <fileset dir="target/rejar" includes="**/*"/>
+     </jar>
+   </postGoal>
+
+</project>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <pomVersion>3</pomVersion>
+  <name>sfx4j</name>
+  <id>sfx4j</id>
+  <currentVersion>1.0-RC</currentVersion>
+  
+  <organization>
+    <name>Kohsuke Kawaguchi</name>
+    <url>http://www.kohsuke.org/</url>
+    <!--logo>http://today.java.net/im/logo_java.gif</logo-->
+  </organization>
+  
+  <!--logo>http://dom4j.org/images/logo.gif</logo-->
+  <inceptionYear>2003</inceptionYear>
+ 
+  <package>org.kohsuke.sfx4j</package>
+  
+  
+  <shortDescription>sfx4j : self-executable Java archive generator</shortDescription>
+  <!--gumpRepositoryId>javanettasks</gumpRepositoryId-->
+
+  <description>
+    Packs a jar file into a single class file.
+  </description>
+  
+  <url>http://sfx4j.dev.java.net/</url>
+
+  <cvsWebUrl>https://sfx4j.dev.java.net/source/browse/sfx4j/</cvsWebUrl>
+  <cvsModule>sfx4j</cvsModule>
+  <issueTrackingUrl>https://sfx4j.dev.java.net/servlets/ProjectIssues</issueTrackingUrl>
+
+  <siteAddress>sfx4j.dev.java.net</siteAddress>
+  <siteDirectory>/</siteDirectory>
+
+
+  <repository>
+    <connection>scm:cvs:pserver:guest@cvs.dev.java.net:/cvs:sfx4j</connection>
+    <developerConnection>scm:cvs:ext:${maven.username}@cvs.dev.java.net:/cvs:sfx4j</developerConnection>
+    <url>https://sfx4j.dev.java.net/source/browse/sfx4j/</url>
+  </repository>
+   
+  <mailingLists>
+  
+    <mailingList>
+      <name>discussion list</name>
+      <subscribe    >dev-subscribe@sfx4j.dev.java.net</subscribe>
+      <unsubscribe>dev-unsubscribe@sfx4j.dev.java.net</unsubscribe>
+      <archive>https://sfx4j.dev.java.net/servlets/SummarizeList?listName=dev</archive>
+    </mailingList>
+  
+  </mailingLists>
+
+  
+  <developers>
+    <developer>
+      <name>Kohsuke Kawaguchi</name>
+      <id>kohsuke</id>
+      <email>kk@kohsuke.org</email>
+      <organization>Sun Microsystems</organization>
+    </developer>
+    
+  </developers>
+  
+  <dependencies>
+
+    <dependency>
+      <id>bcel</id>
+      <version>5.1</version>
+    </dependency>
+
+    <!--dependency>
+      <id></id>
+      <version></version>
+    </dependency-->
+
+  </dependencies>
+  
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+    <unitTestSourceDirectory>test</unitTestSourceDirectory>
+
+    <!-- Resources that are packaged up inside the JAR file -->
+    <resources>
+      <resource>
+        <directory>src</directory>
+        <includes>
+          <include>**/*.properties</include>
+          <include>**/Setup.java</include>
+        </includes>
+      </resource>
+    </resources>
+    
+    <!-- Unit test classes -->
+    <unitTest>
+      <includes>
+        <include>**/Test*.java</include>
+      </includes>
+    </unitTest>
+    
+    <nagEmailAddress>kk@kohsuke.org</nagEmailAddress>
+  </build>
+  
+  <reports>
+    <report>maven-changelog-plugin</report>
+    <report>maven-changes-plugin</report>
+    <report>maven-developer-activity-plugin</report>
+    <report>maven-file-activity-plugin</report>
+    <report>maven-javadoc-plugin</report>
+    <report>maven-license-plugin</report>
+    <!--report>maven-pmd-plugin</report-->
+    <!--report>maven-tasklist-plugin</report-->
+  </reports>
+</project>
