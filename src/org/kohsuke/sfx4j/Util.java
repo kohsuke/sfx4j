@@ -9,7 +9,7 @@ import java.io.OutputStream;
  * @author
  *     Kohsuke Kawaguchi (kk@kohsuke.org)
  */
-public class Util {
+class Util {
     public static void copyStream( InputStream in, OutputStream out, boolean closeOut ) throws IOException {
         byte[] buf = new byte[256];
         int len;

@@ -26,14 +26,16 @@ import org.apache.bcel.generic.ConstantPoolGen;
  */
 public class Packager {
     public static void main( String[] args ) throws IOException {
-        if( args.length!=3 ) {
-            System.out.println("Usage: Packager <jar file to be packed> <class name> <output file>");
+        if( args.length!=2 ) {
+            System.out.println("Usage: Packager <jar file to be packed> <output file name>");
             System.exit(-1);
         }
 
-        String className = args[1];
         InputStream contents = new FileInputStream(args[0]);
-        File output = new File(args[2]);
+        File output = new File(args[1]);
+        String className = output.getName();
+        className = className.substring(0,className.length()-6);
+        
         
         File setupSourceFile = new File(className+".java");
         setupSourceFile.deleteOnExit();

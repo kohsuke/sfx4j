@@ -12,7 +12,7 @@ import java.io.OutputStream;
  * @author
  *     Kohsuke Kawaguchi (kk@kohsuke.org)
  */
-public class Proc {
+class Proc {
     
     private final Process proc;
     

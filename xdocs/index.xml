@@ -3,8 +3,26 @@
 <body>
 <section name="About this project">
 	<p>
-		The intended audiences are projects that need a simple installer (for example to have a click-through license agreement.)
+	  This project allows you to embed an executable jar file into a single class file.
+	  The generated class file has the main method and it will launch the jar file.
+	</p><p>
+	  The motivation for this project was to create a pure-Java installer that forces
+	  users to agree license terms before the installation starts. If we just use
+	  the jar file as the installer, people can easily extract the contents from it
+	  without ever agreeing with the license.
+	</p><p>
+	  To use this tool, run the jar file as follows:
 	</p>
+<pre>java -jar sfx4j.jar myjar.jar out/PackedClass.class</pre>
+  <p>
+    This will pack the <code>myjar.jar</code> file and generates <code>out/PackedClass.class</code> file.
+    This class file can be executed as follows:
+  </p>
+<pre>java -cp out PackedClass</pre>
+  <p>
+    and this will run as if you run the following command:
+  </p>
+<pre>java -jar myjar.jar</pre>
 </section>
 </body>
 </document>
