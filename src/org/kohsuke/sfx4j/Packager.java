@@ -1,21 +1,26 @@
 package org.kohsuke.sfx4j;
+import org.apache.bcel.classfile.Attribute;
+import org.apache.bcel.classfile.ClassParser;
+import org.apache.bcel.classfile.JavaClass;
+import org.apache.bcel.classfile.Unknown;
+import org.apache.bcel.generic.ConstantPoolGen;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.Writer;
-
-import org.apache.bcel.classfile.Attribute;
-import org.apache.bcel.classfile.ClassParser;
-import org.apache.bcel.classfile.JavaClass;
-import org.apache.bcel.classfile.Unknown;
-import org.apache.bcel.generic.ConstantPoolGen;
+import java.util.jar.JarOutputStream;
+import java.util.jar.Manifest;
+import java.util.jar.Attributes;
+import java.util.zip.ZipEntry;
 
 
 /**
@@ -27,16 +32,22 @@ import org.apache.bcel.generic.ConstantPoolGen;
 public class Packager {
     public static void main( String[] args ) throws IOException {
         if( args.length!=2 ) {
-            System.out.println("Usage: Packager <jar file to be packed> <output file name>");
+            System.out.println("Usage: Packager <jar file to be packed> <output class/jar file name>");
             System.exit(-1);
         }
 
         InputStream contents = new FileInputStream(args[0]);
         File output = new File(args[1]);
-        String className = output.getName();
-        className = className.substring(0,className.length()-6);
-        
-        
+        boolean produceJar = output.getPath().endsWith(".jar");
+        String className;
+        if(produceJar) {
+            className = "Main";
+        } else {
+            className = output.getName();
+            className = className.substring(0,className.length()-6);
+        }
+
+
         File setupSourceFile = new File(className+".java");
         setupSourceFile.deleteOnExit();
         
@@ -70,7 +81,15 @@ public class Packager {
         setupClassFile.delete();
         
         // write to the target
-        c.dump(output);
+        if(produceJar) {
+            Manifest m = new Manifest();
+            m.getMainAttributes().put(Attributes.Name.MAIN_CLASS,"Main");
+            m.getMainAttributes().put(Attributes.Name.MANIFEST_VERSION,"1.0");
+            JarOutputStream jar = new JarOutputStream(new FileOutputStream(output),m);
+            jar.putNextEntry(new ZipEntry("Main.class"));
+            c.dump(jar);
+        } else
+            c.dump(output);
     }
 
     private static byte[] readStream(InputStream in) throws IOException {

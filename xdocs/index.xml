@@ -3,7 +3,7 @@
 <body>
 <section name="About this project">
 	<p>
-	  This project allows you to embed an executable jar file into a single class file.
+	  This project allows you to embed an executable jar file into a single class/jar file.
 	  The generated class file has the main method and it will launch the jar file.
 	</p><p>
 	  The motivation for this project was to create a pure-Java installer that forces
@@ -23,6 +23,10 @@
     and this will run as if you run the following command:
   </p>
 <pre>java -jar myjar.jar</pre>
+   <p>
+     To produce an executable jar file, execute the following:
+   </p>
+<pre>java -jar sfx4j.jar myjar.jar out/PackedClass.jar</pre>
 </section>
 </body>
 </document>

@@ -95,18 +95,27 @@ public class Setup implements Runnable {
         
         // launch java
         Process proc = Runtime.getRuntime().exec((String[]) cmds.toArray(new String[cmds.size()]));
-        new Thread(new Setup(System.in,proc.getOutputStream())).start();
-        new Thread(new Setup(proc.getInputStream(),System.out)).start();
-        new Thread(new Setup(proc.getErrorStream(),System.err)).start();
+        new Thread(new Setup(System.in,proc.getOutputStream(),false)).start();
+        new Thread(new Setup(proc.getInputStream(),System.out,true)).start();
+        new Thread(new Setup(proc.getErrorStream(),System.err,true)).start();
         System.exit(proc.waitFor());
     }
 
 
-    private static void copyStream( InputStream in, OutputStream out, boolean closeOut ) throws IOException {
-        byte[] buf = new byte[256];
-        int len;
-        while((len=in.read(buf))>=0) {
-            out.write(buf,0,len);
+    private void copyStream( InputStream in, OutputStream out, boolean closeOut ) throws IOException {
+        if(buffering) {
+            byte[] buf = new byte[256];
+            int len;
+            while((len=in.read(buf))>=0) {
+                out.write(buf,0,len);
+            }
+        } else {
+            int ch;
+            while((ch=in.read())!=-1) {
+                out.write(ch);
+                if(ch=='\n')
+                    out.flush();
+            }
         }
         in.close();
         if(closeOut)
@@ -116,10 +125,12 @@ public class Setup implements Runnable {
     // as an instance class, it implements CopyThread.
     private final InputStream in;
     private final OutputStream out;
-    
-    private Setup(InputStream in, OutputStream out) {
+    private final boolean buffering;
+
+    private Setup(InputStream in, OutputStream out, boolean buffering) {
         this.in = in;
         this.out = out;
+        this.buffering = buffering;
     }
     
     public void run() {
