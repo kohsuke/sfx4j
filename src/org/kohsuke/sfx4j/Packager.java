@@ -47,7 +47,7 @@ public class Packager {
                 "Setup", className );
 
          // invoke javac and have it compile the code
-        new Proc("javac "+setupSourceFile).join();
+        new Proc("javac -source 1.2 -target 1.2 "+setupSourceFile).join();
         
         File setupClassFile = new File(className+".class");
         
