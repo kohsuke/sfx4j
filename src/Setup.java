@@ -49,8 +49,8 @@ public class Setup implements Runnable {
         
         // read the length
         i += signature.length;
-        int payloadSize = (buf[i]<<24)+(buf[i+1]<<16)
-                            +(buf[i+2]<<8)+(buf[i+3]);
+        int payloadSize = (buf[i]<<24)+((buf[i+1]<<16)&0xFF0000)
+                            +((buf[i+2]<<8)&0xFF00)+((buf[i+3])&0xFF);
         byte[] payload = new byte[payloadSize];
         // remember the offset
         int start = i+4;

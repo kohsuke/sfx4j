@@ -26,13 +26,14 @@ import org.apache.bcel.generic.ConstantPoolGen;
  */
 public class Packager {
     public static void main( String[] args ) throws IOException {
-        if( args.length!=2 ) {
-            System.out.println("Usage: Packager <jar file to be packed> <class name>");
+        if( args.length!=3 ) {
+            System.out.println("Usage: Packager <jar file to be packed> <class name> <output file>");
             System.exit(-1);
         }
 
         String className = args[1];
         InputStream contents = new FileInputStream(args[0]);
+        File output = new File(args[2]);
         
         File setupSourceFile = new File(className+".java");
         setupSourceFile.deleteOnExit();
@@ -55,6 +56,7 @@ public class Packager {
         c.setConstantPool(gen.getFinalConstantPool());
         
         byte[] payload = pack(contents);
+//        System.out.println("payload size is "+payload.length);
         
         Attribute[] atts = c.getAttributes();
         Attribute[] newAtts = new Attribute[atts.length+1];
@@ -63,8 +65,10 @@ public class Packager {
                 name, payload.length, payload, c.getConstantPool() );
         c.setAttributes(newAtts);
 
-        // overwrite
-        c.dump(setupClassFile);
+        setupClassFile.delete();
+        
+        // write to the target
+        c.dump(output);
     }
 
     private static byte[] readStream(InputStream in) throws IOException {
