@@ -1,6 +1,6 @@
 #!/bin/sh
 cd target/docs
-cvs -d:pserver:kohsuke_agent@cvs.dev.java.net:/cvs import -m "web site update" sfx4j/www/maven site-deployment t`date +%Y%m%d-%H%M%S`
+cvs -d:pserver:kohsuke@cvs.dev.java.net:/cvs import -m "web site update" sfx4j/www/maven site-deployment t`date +%Y%m%d-%H%M%S`
 cd ../..
 cd ../www
 date >> update.html
