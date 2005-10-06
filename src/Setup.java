@@ -88,7 +88,7 @@ public class Setup implements Runnable {
         
         // build command line
         List cmds = new ArrayList();
-        cmds.add("java");
+        cmds.add(getJavaExe());
         cmds.add("-jar");
         cmds.add(jar.toString());
         cmds.addAll(Arrays.asList(args));
@@ -99,6 +99,14 @@ public class Setup implements Runnable {
         new Thread(new Setup(proc.getInputStream(),System.out,true)).start();
         new Thread(new Setup(proc.getErrorStream(),System.err,true)).start();
         System.exit(proc.waitFor());
+    }
+
+    private static String getJavaExe() {
+        try {
+            return new File(System.getProperty("java.home"),"java").getPath();
+        } catch (SecurityException e) {
+            return "java";
+        }
     }
 
 
