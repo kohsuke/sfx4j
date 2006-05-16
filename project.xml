@@ -26,8 +26,6 @@
   
   <url>http://sfx4j.dev.java.net/</url>
 
-  <cvsWebUrl>https://sfx4j.dev.java.net/source/browse/sfx4j/</cvsWebUrl>
-  <cvsModule>sfx4j</cvsModule>
   <issueTrackingUrl>https://sfx4j.dev.java.net/servlets/ProjectIssues</issueTrackingUrl>
 
   <siteAddress>sfx4j.dev.java.net</siteAddress>
