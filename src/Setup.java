@@ -103,7 +103,7 @@ public class Setup implements Runnable {
 
     private static String getJavaExe() {
         try {
-            return new File(System.getProperty("java.home"),"java").getPath();
+            return new File(System.getProperty("java.home"),"bin/java").getPath();
         } catch (SecurityException e) {
             return "java";
         }
