@@ -3,7 +3,7 @@
   <pomVersion>3</pomVersion>
   <groupId>org.kohsuke.sfx4j</groupId>
   <artifactId>sfx4j</artifactId>
-  <currentVersion>1.0</currentVersion>
+  <currentVersion>1.2</currentVersion>
   
   <organization>
     <name>Kohsuke Kawaguchi</name>
