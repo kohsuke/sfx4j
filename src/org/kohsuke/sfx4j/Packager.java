@@ -87,7 +87,7 @@ public class Packager {
             m.getMainAttributes().put(Attributes.Name.MANIFEST_VERSION,"1.0");
             JarOutputStream jar = new JarOutputStream(new FileOutputStream(output),m);
             jar.putNextEntry(new ZipEntry("Main.class"));
-            c.dump(jar);
+            c.dump(new ChunkedOutputStream(jar));
         } else
             c.dump(output);
     }
